@@ -1,7 +1,7 @@
 <?php
     $db_host = "localhost";
-    $db_user = "dan";
-    $db_pass = "Sourbread012&*";
+    $db_user = "username";
+    $db_pass = "password";
     $db_name = "guestbook";
 
     $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
