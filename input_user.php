@@ -13,7 +13,7 @@
         </tr>
     </table>
 
-    <form action="<?php $_SERVER['PHP_SELF']?>" method="POST" name="uploadform" id="uploadform">
+    <form action="<?php $_SERVER['PHP_SELF']?>" method="post" name="uploadform" id="uploadform">
         <table width="90%" border="0" align="center" cellpadding="2" celllspacing="2" class="content">
             <tr bgcolor="$FFDFAA">
                 <td colspan="3">
@@ -57,7 +57,7 @@
                 if ($result != 0) {
                     $message = "There is same username";
                 } else {
-                    $query = "INSERT INTO users (username, password)"."VALUES ('$username', '$password')";
+                    $query = "INSERT INTO user (username, password)"."VALUES ('$username', '$password')";
                     mysqli_query($conn, $query) or die ('Error, query failed'.mysqli_error($conn));
                     mysqli_close($conn);
 
@@ -69,5 +69,3 @@
     ?>
 </body>
 </html>
-
-
