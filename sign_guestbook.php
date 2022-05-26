@@ -10,29 +10,30 @@
     <?php
         include 'config.php';
 
-        $name = htmlentities(trim($_POST['name']));
-        $email = htmlentities(trim($_POST['email']));
-        $content = nl2br(htmlentities(trim($_POST['content'])));
+        $name = htmlentities(trim($_POST['tname']));
+        $email = htmlentities(trim($_POST['temail']));
+        $content = nl2br(htmlentities(trim($_POST['tcontent'])));
         $date = date('j F Y, g:i a');
         $ip1 = $_SERVER['REMOTE_ADDR'];
         $ip2 = getenv('HTTP_X_FORWARDED_FOR');
         $ip = $ip.'-'.$ip2;
 
-        if (isset($_POST['uploadform'])) {
+        if (isset($_POST['upload'])) {
             if ((empty($name)) || (empty($email)) || (empty($content))) {
                 header('location: error.php');
                 exit;
             } else {
-                $query = "INSERT INTO visitors (name, email, comment, date , ip)" . "VALUES('$name', '$email', '$content', '$date', '$ip')";
-                mysqli_query($conn, $query) or die ('Error, query failed'.mysqli_error($conn));
+                $query = "INSERT INTO visitors (name, email, comment, date , ip) VALUES ('$name', '$email', '$content', '$date', '$ip')";
+                mysqli_query($conn, $query) or die ('Error, query failed' . mysqli_error($conn));
                 mysqli_close($conn);
                 header('location: index.php');
+
                 exit;
             }
         }
     ?>
 
-    <form action="<?php $_SERVER['PHP_SELF']?>" method="POST" name="uploadform" id="uploadform">
+    <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post" name="uploadform" id="uploadform">
         <table width="90%" border="0" align="center" cellpadding="2" cellspacing="2" class="content">
             <tr bgcolor="#FFDFAA">
                 <td colspan="3">
