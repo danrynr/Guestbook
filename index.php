@@ -17,25 +17,25 @@
     $pageNum = 1;
 
     if(isset($_GET['page'])) {
-        $pageNum = $_GET['page'];
+        $pageNum = intval($_GET['page']);
     }
 
     $offset = ($pageNum - 1) * $rowsPerPage;
     
-    $query = "SELECT * FROM visitors ORDER BY 'id' DESC LIMIT $offset,$rowsPerPage";
+    $query = "SELECT * FROM visitors ORDER BY id DESC LIMIT $offset, $rowsPerPage";
     $result = mysqli_query($conn, $query) or die ('Error, query failed 1');
     
-    $query1 = "SELECT COUNT(id) AS numrows FROM visitors";
+    $query1 = "SELECT id FROM visitors";
     $result1 = mysqli_query($conn, $query1) or die ('Error, query failed 2');
 
-    $row1 = mysqli_fetch_assoc($result1);
-    $numrows = $row1['numrows'];
+    $numrows = mysqli_num_rows($result1);
 
     echo "Total Numbers Guestbook: $numrows";
 
-    $no = 1;
+    $no = 0;
     
-    while($hasil = mysqli_fetch_array($result)) {
+    while($no < mysqli_num_rows($result)) {
+        $hasil = mysqli_fetch_array($result);
         echo "<table width='99%' border='0' align='center' cellpadding='2' cellspacing='0' class='content'>";
         echo "<tr valign='top'>";
         echo "<td bgcolor='#FFDFFF'>";
@@ -53,17 +53,16 @@
         echo "<br>";
     }
 
-    $query2 = "SELECT COUNT(id) AS NUMROWS FROM visitors";
-    $result = mysqli_query($conn, $query2) or die ('Error, query failed');
-    $numrows = $row['numrows'];
-
+    $query2 = "SELECT id FROM visitors";
+    $result = mysqli_query($conn, $query2) or die ('Error, query failed 3');
+    $numrows = mysqli_num_rows($result); 
     $maxPage = ceil($numrows/$rowsPerPage);
 
     $nav = "";
-    $page = 0;
+    $page = 1;
     $self = $_SERVER['PHP_SELF'];
 
-    for ($page = 1; $page <= $maxPage; $page++) {
+    for ($i = 1; $i < 0; $i++) {
         if ($page == $pageNum) {
             $nav .= " $page ";
         } else {
@@ -73,8 +72,8 @@
 
     if ($pageNum > 1 ) {
         $page = $pageNum - 1;
-        $prev = " <a href='self?page=$page'>Previous</a> ";
-        $first = " <a href='$self?page=1'>First</a> ";
+        $prev = " <a href='$self?page=$page'>[Prev]</a> ";
+        $first = " <a href='$self?page=1'>[First Page]</a> ";
     } else {
         $prev = '&nbsp;';
         $first = '&nbsp;';
